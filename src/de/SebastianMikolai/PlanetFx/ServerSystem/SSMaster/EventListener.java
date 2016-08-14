@@ -72,6 +72,7 @@ public class EventListener implements Listener {
 			}
 			if (e.getCurrentItem() != null && e.getCurrentItem().hasItemMeta()) {
 				if (ChatColor.stripColor(e.getClickedInventory().getTitle()).contains("Game: ")) {
+					e.setCancelled(true);
 					MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
 					if (mcs != null) {
 						if (mcs.getStatus() == MinecraftServerStatus.Online || mcs.getStatus() == MinecraftServerStatus.Waiting) {
