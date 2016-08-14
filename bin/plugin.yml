@@ -1,0 +1,12 @@
+name: PlanetFxServerSystems
+version: 1.1.2
+author: Sebastian Mikolai
+
+main: de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.SSMaster
+
+loadbefore: [WorldEdit, WorldGuard, Citizens, Multiverse-Core]
+
+commands:
+  cs:
+    description: PlanetFxCloudServer Commands
+    usage: /cs

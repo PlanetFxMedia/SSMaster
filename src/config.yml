@@ -1,0 +1,13 @@
+database:
+  host: localhost
+  port: 3306
+  db: akonia_serversystem
+  user: root
+  password: U2ViYXN0aWFuMTIy
+tcpport: 25615
+cspath: /home/sQ12461/gameserver/ServerSystem/ServerSystem/
+teleport: 40
+BossBarMessages:
+- '&b&lAkonia Netzwerk: &a&lMinigames'
+- '&d[1.10 - 1.10.2] &cClient Support'
+- '&6HungerGames&2 - &6Bedwars&2 - &6Spleef&2 - &6TurfWars'
