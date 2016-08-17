@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
+
 import com.google.gson.JsonObject;
 
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.SSMaster;
@@ -15,6 +17,8 @@ import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.Minecr
 
 public class MySQL {
 
+	public static Connection con;
+	
 	public static Connection Connect() {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:mysql://" + SSMaster.getInstance().getConfig().getString("database.host") + ":" + 
@@ -34,54 +38,51 @@ public class MySQL {
 	
 	public static void LadeTabellen() {
 		try {
-			Connection con = Connect();
-			Statement stmt = con.createStatement();
-			ResultSet rss = stmt.executeQuery("SHOW TABLES LIKE 'MinecraftServer'");
-			if (rss.next()) {
-				SSMaster.getInstance().getLogger().info("Die Tabelle MinecraftServer wurde geladen!");
+			if (con != null) {
+				Statement stmt = con.createStatement();
+				ResultSet rss = stmt.executeQuery("SHOW TABLES LIKE 'MinecraftServer'");
+				if (rss.next()) {
+					SSMaster.getInstance().getLogger().info("Die Tabelle MinecraftServer wurde geladen!");
+				} else {
+					int rs = stmt.executeUpdate("CREATE TABLE MinecraftServer (id INTEGER PRIMARY KEY AUTO_INCREMENT, BungeeCordServername TEXT, Port INTEGER, Map TEXT, Modi TEXT)");
+					SSMaster.getInstance().getLogger().info("Die Tabelle MinecraftServer wurde erstellt! (" + rs + ")");
+				}
+				rss = stmt.executeQuery("SHOW TABLES LIKE 'ServerStatus'");
+				if (rss.next()) {
+					SSMaster.getInstance().getLogger().info("Die Tabelle ServerStatus wurde geladen!");
+				} else {
+					int rs = stmt.executeUpdate("CREATE TABLE ServerStatus (id INTEGER PRIMARY KEY AUTO_INCREMENT, BungeeCordServername TEXT, Online INTEGER, Status TEXT)");
+					SSMaster.getInstance().getLogger().info("Die Tabelle ServerStatus wurde erstellt! (" + rs + ")");
+				}
 			} else {
-				int rs = stmt.executeUpdate("CREATE TABLE MinecraftServer (id INTEGER PRIMARY KEY AUTO_INCREMENT, BungeeCordServername TEXT, Port INTEGER, Map TEXT, Modi TEXT)");
-				SSMaster.getInstance().getLogger().info("Die Tabelle MinecraftServer wurde erstellt! (" + rs + ")");
+				Bukkit.getLogger().info("test");
 			}
-			rss = stmt.executeQuery("SHOW TABLES LIKE 'ServerStatus'");
-			if (rss.next()) {
-				SSMaster.getInstance().getLogger().info("Die Tabelle ServerStatus wurde geladen!");
-			} else {
-				int rs = stmt.executeUpdate("CREATE TABLE ServerStatus (id INTEGER PRIMARY KEY AUTO_INCREMENT, BungeeCordServername TEXT, Online INTEGER, Status TEXT)");
-				SSMaster.getInstance().getLogger().info("Die Tabelle ServerStatus wurde erstellt! (" + rs + ")");
-			}
-			Close(con);
 		} catch (SQLException e) {
-			SSMaster.getInstance().getPluginLoader().disablePlugin(SSMaster.getInstance());
+			System.exit(0);
 		}
 	}
 	
 	public static void addMinecraftServer(MinecraftServer mcs) {
 		try {
-			Connection con = Connect();
 			if (con != null) {
 				Statement stmt = con.createStatement();
 				stmt.execute("INSERT INTO MinecraftServer (BungeeCordServername, Port, Map, Modi) VALUES ('" + mcs.getBungeeCordServername() + "', '" + mcs.getPort() +  "', '" + mcs.getMap() + "', '" + mcs.getModi() + "')");
 			}
-			Close(con);
 		} catch (SQLException e) {}
 	}
 	
 	public static void deleteMinecraftServer(String BungeeCordServername) {
 		try {
-			Connection con = Connect();
 			if (con != null) {
 				Statement stmt = con.createStatement();
 				stmt.execute("DELETE FROM MinecraftServer WHERE BungeeCordServername='" + BungeeCordServername + "'");
 			}
-			Close(con);
 		} catch (SQLException e) {}
 	}
 	
 	public static Map<String, MinecraftServer> getMinecraftServers() {
 		Map<String, MinecraftServer> MinecraftServers = new HashMap<String, MinecraftServer>();
 		try {
-			Connection con = Connect();
 			if (con != null) {
 				Statement stmt = con.createStatement();
 				ResultSet rss = stmt.executeQuery("SELECT * FROM MinecraftServer");
@@ -89,37 +90,31 @@ public class MySQL {
 					MinecraftServers.put(rss.getString("BungeeCordServername"), new MinecraftServer(rss.getString("BungeeCordServername"), rss.getInt("Port"), rss.getString("Map"), rss.getString("Modi")));
 				}
 			}
-			Close(con);
 		} catch (SQLException e) {}
 		return MinecraftServers;
 	}
 	
 	public static void addMinecraftServerStatus(MinecraftServer mcs) {
 		try {
-			Connection con = Connect();
 			if (con != null) {
 				Statement stmt = con.createStatement();
 				stmt.execute("INSERT INTO ServerStatus (BungeeCordServername, Online, Status) VALUES ('" + mcs.getBungeeCordServername() + "', '" + mcs.getOnlinePlayer() +  "', '" + mcs.getStatus() + "')");
 			}
-			Close(con);
 		} catch (SQLException e) {}
 	}
 
 	public static void deleteMinecraftServerStatus(String BungeeCordServername) {
 		try {
-			Connection con = Connect();
 			if (con != null) {
 				Statement stmt = con.createStatement();
 				stmt.execute("DELETE FROM ServerStatus WHERE BungeeCordServername='" + BungeeCordServername + "'");
 			}
-			Close(con);
 		} catch (SQLException e) {}
 	}
 	
 	public static JsonObject getMinecraftServerStatus(String BungeeCordServername) {
 		JsonObject jsonObject = new JsonObject();
 		try {
-			Connection con = Connect();
 			if (con != null) {
 				Statement stmt = con.createStatement();
 				ResultSet rss = stmt.executeQuery("SELECT * FROM ServerStatus WHERE BungeeCordServername='" + BungeeCordServername + "'");
@@ -129,7 +124,6 @@ public class MySQL {
 					jsonObject.addProperty("status", rss.getString("Status"));
 				}
 			}
-			Close(con);
 		} catch (SQLException e) {}
 		return jsonObject;
 	}
