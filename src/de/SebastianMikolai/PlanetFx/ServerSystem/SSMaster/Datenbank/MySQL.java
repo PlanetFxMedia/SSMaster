@@ -32,7 +32,7 @@ public class MySQL {
 	public static Connection getConnection() {
 		try {
 			if (con == null) {
-			con = Connect();
+				con = Connect();
 			}
 			if (con.isClosed()) {
 				con = Connect();
