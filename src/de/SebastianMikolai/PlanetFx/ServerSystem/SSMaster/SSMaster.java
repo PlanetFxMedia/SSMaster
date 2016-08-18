@@ -1,7 +1,6 @@
 package de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -61,18 +60,6 @@ public class SSMaster extends JavaPlugin {
 		
 	@Override
 	public void onEnable() {
-		MySQL.con = MySQL.Connect();
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			@Override
-			public void run() {
-				try {
-					MySQL.con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-				MySQL.con = MySQL.Connect();
-			}
-		}, 4*60*60*20L, 4*60*60*20L);
 		MySQL.LadeTabellen();
 		MinecraftServerManager.getInstance().load();
 		MinecraftServerManager.getInstance().removeMinecraftServer("master");

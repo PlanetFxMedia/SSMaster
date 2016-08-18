@@ -31,7 +31,7 @@ public class NPCInventory {
 			Bukkit.getScheduler().cancelTask(TaskIDWerbungScheduler.get(p));
 			TaskIDWerbungScheduler.remove(p);
 		}
-		TaskIDWerbungScheduler.put(p, Bukkit.getScheduler().scheduleSyncRepeatingTask(SSMaster.getInstance(), new WerbungScheduler(p, name, gamename, modi), 0L, 15L));
+		TaskIDWerbungScheduler.put(p, Bukkit.getScheduler().scheduleSyncRepeatingTask(SSMaster.getInstance(), new WerbungScheduler(p, name, gamename, modi), 0L, 10L));
 	}
 	
 	public static void openInventoryMinigames(Player p, String name, String gamename, String modi) {
