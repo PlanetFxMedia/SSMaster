@@ -24,6 +24,7 @@ public class MySQL {
 					"?user=" + SSMaster.getInstance().getConfig().getString("database.user") + "&password=" + SSMaster.getInstance().getConfig().getString("database.password"));
 			return con;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -58,7 +59,7 @@ public class MySQL {
 				SSMaster.getInstance().getLogger().info("Die Tabelle ServerStatus wurde erstellt! (" + rs + ")");
 			}
 		} catch (SQLException e) {
-			System.exit(0);
+			e.printStackTrace();
 		}
 	}
 	
@@ -67,7 +68,9 @@ public class MySQL {
 			Connection c = getConnection();
 			Statement stmt = c.createStatement();
 			stmt.execute("INSERT INTO MinecraftServer (BungeeCordServername, Port, Map, Modi) VALUES ('" + mcs.getBungeeCordServername() + "', '" + mcs.getPort() +  "', '" + mcs.getMap() + "', '" + mcs.getModi() + "')");
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void deleteMinecraftServer(String BungeeCordServername) {
@@ -75,7 +78,9 @@ public class MySQL {
 			Connection c = getConnection();
 			Statement stmt = c.createStatement();
 			stmt.execute("DELETE FROM MinecraftServer WHERE BungeeCordServername='" + BungeeCordServername + "'");
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static Map<String, MinecraftServer> getMinecraftServers() {
@@ -87,7 +92,9 @@ public class MySQL {
 			while (rss.next()) {
 				MinecraftServers.put(rss.getString("BungeeCordServername"), new MinecraftServer(rss.getString("BungeeCordServername"), rss.getInt("Port"), rss.getString("Map"), rss.getString("Modi")));
 			}
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return MinecraftServers;
 	}
 	
@@ -96,7 +103,9 @@ public class MySQL {
 			Connection c = getConnection();
 			Statement stmt = c.createStatement();
 			stmt.execute("INSERT INTO ServerStatus (BungeeCordServername, Online, Status) VALUES ('" + mcs.getBungeeCordServername() + "', '" + mcs.getOnlinePlayer() +  "', '" + mcs.getStatus() + "')");
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void deleteMinecraftServerStatus(String BungeeCordServername) {
@@ -104,7 +113,9 @@ public class MySQL {
 			Connection c = getConnection();
 			Statement stmt = c.createStatement();
 			stmt.execute("DELETE FROM ServerStatus WHERE BungeeCordServername='" + BungeeCordServername + "'");
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static JsonObject getMinecraftServerStatus(String BungeeCordServername) {
@@ -118,7 +129,9 @@ public class MySQL {
 				jsonObject.addProperty("online", rss.getInt("Online"));
 				jsonObject.addProperty("status", rss.getString("Status"));
 			}
-		} catch (SQLException e) {}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return jsonObject;
 	}
 }
