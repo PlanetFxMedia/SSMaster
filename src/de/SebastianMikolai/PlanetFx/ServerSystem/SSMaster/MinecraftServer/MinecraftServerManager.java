@@ -314,6 +314,9 @@ public class MinecraftServerManager {
 				quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/TurfWars.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/TurfWars.jar");
 				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/CleanroomGenerator.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=world");
 				writer.write(System.getProperty("line.separator"));
@@ -351,15 +354,7 @@ public class MinecraftServerManager {
 				writer.flush();
 				writer.close();
 				writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/start.sh") ,true);
-				writer.write("while true");
-				writer.write(System.getProperty("line.separator"));
-				writer.write("do");
-				writer.write(System.getProperty("line.separator"));
 				writer.write("java -Xmx800M -jar " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/spigot.jar nogui");
-				writer.write(System.getProperty("line.separator"));
-				writer.write("sleep 5");
-				writer.write(System.getProperty("line.separator"));
-				writer.write("done");
 				writer.flush();
 				writer.close();
 			}
