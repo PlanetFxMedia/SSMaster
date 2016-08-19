@@ -354,7 +354,15 @@ public class MinecraftServerManager {
 				writer.flush();
 				writer.close();
 				writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/start.sh") ,true);
+				writer.write("while true");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("do");
+				writer.write(System.getProperty("line.separator"));
 				writer.write("java -Xmx800M -jar " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/spigot.jar nogui");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("sleep 5");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("done");
 				writer.flush();
 				writer.close();
 			}
