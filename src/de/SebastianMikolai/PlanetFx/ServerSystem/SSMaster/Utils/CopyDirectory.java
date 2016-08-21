@@ -27,7 +27,7 @@ public class CopyDirectory {
     public void copyFile(File file, File ziel) { 
     	try {
 			in = new BufferedInputStream(new FileInputStream(file)); 
-			out = new BufferedOutputStream(new FileOutputStream(ziel, true)); 
+			out = new BufferedOutputStream(new FileOutputStream(ziel, false)); 
 			int bytes = 0; 
 			while ((bytes = in.read()) != -1) { 
 				out.write(bytes); 

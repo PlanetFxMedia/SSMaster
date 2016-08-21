@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -153,17 +152,20 @@ public class MinecraftServerManager {
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/SSClient.jar");
 			cd.copyFile(quelle, ziel);
 			if (mcs.getBungeeCordServername().toLowerCase().contains("bedwars")) {
-				quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/BedwarsRel.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/BedwarsRel.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/BedwarsRel.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/CleanroomGenerator.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/HolographicDisplays.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/HolographicDisplays.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/HolographicDisplays.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/Multiverse-Core.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=lobby");
@@ -206,11 +208,17 @@ public class MinecraftServerManager {
 				writer.flush();
 				writer.close();
 			} else if (mcs.getBungeeCordServername().toLowerCase().contains("spleef")) {
-				quelle = new File(SSMaster.getInstance().cspath + "files/spleef/Multiverse-Core.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/spleef/PlanetFxSpleef.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/PlanetFxSpleef.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/PlanetFxSpleef.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=lobby");
@@ -253,11 +261,17 @@ public class MinecraftServerManager {
 				writer.flush();
 				writer.close();
 			} else if (mcs.getBungeeCordServername().toLowerCase().contains("hungergames")) {
-				quelle = new File(SSMaster.getInstance().cspath + "files/hungergames/BukkitGames.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/BukkitGames.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/BukkitGames.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/hungergames/SQLibrary.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/SQLibrary.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/SQLibrary.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=world");
@@ -308,14 +322,17 @@ public class MinecraftServerManager {
 				writer.flush();
 				writer.close();
 			} else if (mcs.getBungeeCordServername().toLowerCase().contains("turfwars")) {
-				quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/Multiverse-Core.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/TurfWars.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/TurfWars.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/TurfWars.jar");
 				cd.copyFile(quelle, ziel);
-				quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/CleanroomGenerator.jar");
+				quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=world");
@@ -394,50 +411,65 @@ public class MinecraftServerManager {
 		ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/SSClient.jar");
 		cd.copyFile(quelle, ziel);
 		if (mcs.getBungeeCordServername().toLowerCase().contains("bedwars")) {
-			quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/BedwarsRel.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/BedwarsRel.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/BedwarsRel.jar");
 			cd.copyFile(quelle, ziel);
-			quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/CleanroomGenerator.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
 			cd.copyFile(quelle, ziel);
-			quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/HolographicDisplays.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/HolographicDisplays.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/HolographicDisplays.jar");
 			cd.copyFile(quelle, ziel);
-			quelle = new File(SSMaster.getInstance().cspath + "files/bedwars/Multiverse-Core.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 			cd.copyFile(quelle, ziel);
 		} else if (mcs.getBungeeCordServername().toLowerCase().contains("spleef")) {
-			quelle = new File(SSMaster.getInstance().cspath + "files/spleef/Multiverse-Core.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
 			cd.copyFile(quelle, ziel);
-			quelle = new File(SSMaster.getInstance().cspath + "files/spleef/PlanetFxSpleef.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/PlanetFxSpleef.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/PlanetFxSpleef.jar");
 			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+			cd.copyFile(quelle, ziel);
 		} else if (mcs.getBungeeCordServername().toLowerCase().contains("hungergames")) {
-			quelle = new File(SSMaster.getInstance().cspath + "files/hungergames/BukkitGames.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/BukkitGames.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/BukkitGames.jar");
 			cd.copyFile(quelle, ziel);
-			quelle = new File(SSMaster.getInstance().cspath + "files/hungergames/SQLibrary.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/SQLibrary.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/SQLibrary.jar");
 			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+			cd.copyFile(quelle, ziel);
 		} else if (mcs.getBungeeCordServername().toLowerCase().contains("turfwars")) {
-			quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/Multiverse-Core.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
 			cd.copyFile(quelle, ziel);
-			quelle = new File(SSMaster.getInstance().cspath + "files/turfwars/TurfWars.jar");
+			quelle = new File(SSMaster.getInstance().cspath + "files/TurfWars.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/TurfWars.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 			cd.copyFile(quelle, ziel);
 		}
 		if (p != null) {
 			ChatUtils.sendMessage(p, "Server " + mcs.getBungeeCordServername() + " geupdatet!");
 		}
 		MinecraftServerManager.getInstance().startMinecraftServer(mcs.getBungeeCordServername());
-	}
-	
-	public void copyPlayerdataToServer(UUID uuid, File data, MinecraftServer mcs) {
-		File ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/lobby/playerdata/" + uuid + ".dat");
-		CopyDirectory cd = new CopyDirectory();
-		cd.copyFile(data, ziel);
 	}
 	
 	public int nextPort() {
