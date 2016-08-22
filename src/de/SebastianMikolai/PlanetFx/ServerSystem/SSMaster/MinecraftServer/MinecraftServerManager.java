@@ -167,6 +167,9 @@ public class MinecraftServerManager {
 				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=lobby");
 				writer.write(System.getProperty("line.separator"));
@@ -220,6 +223,9 @@ public class MinecraftServerManager {
 				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=lobby");
 				writer.write(System.getProperty("line.separator"));
@@ -272,6 +278,9 @@ public class MinecraftServerManager {
 				cd.copyFile(quelle, ziel);
 				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
 				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=world");
@@ -333,6 +342,9 @@ public class MinecraftServerManager {
 				cd.copyFile(quelle, ziel);
 				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
 				cd.copyFile(quelle, ziel);
 				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
 				writer.write("level-name=world");
@@ -426,6 +438,9 @@ public class MinecraftServerManager {
 			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+			cd.copyFile(quelle, ziel);
 		} else if (mcs.getBungeeCordServername().toLowerCase().contains("spleef")) {
 			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
@@ -438,6 +453,9 @@ public class MinecraftServerManager {
 			cd.copyFile(quelle, ziel);
 			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
 			cd.copyFile(quelle, ziel);
 		} else if (mcs.getBungeeCordServername().toLowerCase().contains("hungergames")) {
 			quelle = new File(SSMaster.getInstance().cspath + "files/BukkitGames.jar");
@@ -452,6 +470,9 @@ public class MinecraftServerManager {
 			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
 			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+			cd.copyFile(quelle, ziel);
 		} else if (mcs.getBungeeCordServername().toLowerCase().contains("turfwars")) {
 			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
@@ -464,6 +485,9 @@ public class MinecraftServerManager {
 			cd.copyFile(quelle, ziel);
 			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
 			cd.copyFile(quelle, ziel);
 		}
 		if (p != null) {
