@@ -66,7 +66,7 @@ public class SSMaster extends JavaPlugin {
 		MinecraftServerManager.getInstance().addMinecraftServer(new MinecraftServer("master", tcp_port, "", Bukkit.getMaxPlayers() + "x1"));
 		tcp_port_bungee = MinecraftServerManager.getInstance().getMinecraftServer("bungee").getPort();
 		getServer().getMessenger().registerOutgoingPluginChannel(instance, "BungeeCord");
-		getCommand("ss").setExecutor(new CommandListener());
+		getCommand("cs").setExecutor(new CommandListener());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(new EventListener(), this);
 		for (World w : Bukkit.getWorlds()) {

@@ -20,8 +20,7 @@ public class MySQL {
 	public static Connection Connect() {
 		try {
 			Connection con = DriverManager.getConnection("jdbc:mysql://" + SSMaster.getInstance().getConfig().getString("database.host") + ":" + 
-					SSMaster.getInstance().getConfig().getInt("database.port") + "/" + SSMaster.getInstance().getConfig().getString("database.db") + 
-					"?user=" + SSMaster.getInstance().getConfig().getString("database.user") + "&password=" + SSMaster.getInstance().getConfig().getString("database.password"));
+					SSMaster.getInstance().getConfig().getInt("database.port") + "/" + SSMaster.getInstance().getConfig().getString("database.db") + "?autoReconnect=true", SSMaster.getInstance().getConfig().getString("database.user"), SSMaster.getInstance().getConfig().getString("database.password"));
 			return con;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -33,8 +32,7 @@ public class MySQL {
 		try {
 			if (con == null) {
 				con = Connect();
-			}
-			if (con.isClosed()) {
+			} else if (con.isClosed()) {
 				con = Connect();
 			}
 		} catch (SQLException e) {

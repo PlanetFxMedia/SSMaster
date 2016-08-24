@@ -1,10 +1,10 @@
 name: PlanetFxServerSystems
-version: 1.2.0
+version: 1.2.1
 author: Sebastian Mikolai
 
 main: de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.SSMaster
 
 commands:
-  ss:
+  cs:
     description: PlanetFxServerSystem Commands
-    usage: /ss
+    usage: /cs
