@@ -394,6 +394,68 @@ public class MinecraftServerManager {
 				writer.write("done");
 				writer.flush();
 				writer.close();
+			} else if (mcs.getBungeeCordServername().toLowerCase().contains("icehockey")) {
+				quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/PlanetFxIceHockey.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/PlanetFxIceHockey.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/WorldEdit.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldEdit.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/WorldGuard.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldGuard.jar");
+				cd.copyFile(quelle, ziel);
+				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
+				writer.write("level-name=world");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("level-type=FLAT");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-protection=0");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("force-gamemode=true");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("allow-nether=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("gamemode=0");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("difficulty=0");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-monsters=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-animals=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-npcs=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("pvp=true");
+				writer.write(System.getProperty("line.separator"));
+				int maxplayer = mcs.getMaxPlayer();
+				maxplayer++;
+				writer.write("max-players=" + maxplayer);
+				writer.write(System.getProperty("line.separator"));
+				writer.write("server-port=" + mcs.getPort());
+				writer.write(System.getProperty("line.separator"));
+				writer.write("online-mode=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("motd=mc_mg_" + mcs.getBungeeCordServername());
+				writer.write(System.getProperty("line.separator"));
+				writer.write("server-name=" + mcs.getBungeeCordServername());
+				writer.flush();
+				writer.close();
+				writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/start.sh") ,true);
+				writer.write("java -Xmx800M -jar " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/spigot.jar nogui");
+				writer.flush();
+				writer.close();
 			}
 			Bukkit.getScheduler().scheduleSyncDelayedTask(SSMaster.getInstance(), new Runnable() {
 				@Override
@@ -412,7 +474,6 @@ public class MinecraftServerManager {
 	}
 	
 	public void updateTemplateServer(CommandSender p, MinecraftServer mcs) {
-		MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
 		File quelle = new File(SSMaster.getInstance().cspath + "templates/" + mcs.getBungeeCordServername().replace("0", "").replace("1", "").replace("2", "").replace("3", "").replace("4", "").replace("5", "").replace("6", "").replace("7", "").replace("8", "").replace("9", "")  + "_" + mcs.getMap() + mcs.getModi() + "/");
 		File ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
 		CopyDirectory cd = new CopyDirectory();
@@ -489,11 +550,32 @@ public class MinecraftServerManager {
 			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
 			cd.copyFile(quelle, ziel);
+		} else if (mcs.getBungeeCordServername().toLowerCase().contains("icehockey")) {
+			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/PlanetFxIceHockey.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/PlanetFxIceHockey.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/CleanroomGenerator.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/CleanroomGenerator.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/WorldEdit.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldEdit.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/WorldGuard.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldGuard.jar");
+			cd.copyFile(quelle, ziel);
 		}
 		if (p != null) {
 			ChatUtils.sendMessage(p, "Server " + mcs.getBungeeCordServername() + " geupdatet!");
 		}
-		MinecraftServerManager.getInstance().startMinecraftServer(mcs.getBungeeCordServername());
 	}
 	
 	public int nextPort() {
