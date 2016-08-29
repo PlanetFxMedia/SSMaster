@@ -1,8 +1,7 @@
 package de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer;
 
 public enum MinecraftServerStatus {
-	Waiting,
-	Running,
+	Offline,
 	Online,
-	Offline
+	Running
 }

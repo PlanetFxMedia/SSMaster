@@ -1,11 +1,15 @@
 package de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -78,14 +82,34 @@ public class MinecraftServerManager {
 	public void stopMinecraftServer(String BungeeCordServername) {
 		if (MinecraftServers.containsKey(BungeeCordServername)) {
 			MinecraftServer mcs = getMinecraftServer(BungeeCordServername);
-			if (mcs != null) {
-				String cmdexec = "screen -X -S mc_mg_" + mcs.getBungeeCordServername() + " quit";
+			if (mcs != null) {		        
+				List<String> pid = new ArrayList<String>();
 		        try {
-		        	File dir = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
-		        	Runtime.getRuntime().exec(cmdexec, null, dir);
-		        } catch (IOException ioe) {
-		        	ioe.printStackTrace();
-		       	}
+					String[] cmdexec = {"/bin/sh", "-c", "ps -ef | grep " + mcs.getBungeeCordServername() + " | grep -v grep | awk '{print $2}'"};
+					Runtime rt = Runtime.getRuntime();
+					Process proc = rt.exec(cmdexec);
+			        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+			        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+			        String s = null;
+			        while ((s = stdInput.readLine()) != null) {
+			        	pid.add(s);
+			        }
+			        while ((s = stdError.readLine()) != null) {
+			        	System.out.println(s);
+			        }
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		        if (!pid.isEmpty()) {
+		        	for (String processID : pid) {
+		        		try {
+							String[] cmdexec = {"/bin/sh", "-c", "kill " + processID};
+							Runtime.getRuntime().exec(cmdexec);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+		        	}
+		        }
 			}
 		}
 	}
@@ -94,7 +118,7 @@ public class MinecraftServerManager {
 		if (MinecraftServers.containsKey(BungeeCordServername)) {
 			MinecraftServer mcs = getMinecraftServer(BungeeCordServername);
 			if (mcs != null) {
-				String cmdexec = "screen -dmS mc_mg_" + mcs.getBungeeCordServername() + " " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/./start.sh";
+				String cmdexec = "screen -dmS " + mcs.getBungeeCordServername() + " taskset -c 1-8 " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/./start.sh";
 		        try {
 		        	File dir = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
 		        	Runtime.getRuntime().exec(cmdexec, null, dir);

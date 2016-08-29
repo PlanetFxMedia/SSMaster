@@ -75,7 +75,7 @@ public class EventListener implements Listener {
 					e.setCancelled(true);
 					MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
 					if (mcs != null) {
-						if (mcs.getStatus() == MinecraftServerStatus.Online || mcs.getStatus() == MinecraftServerStatus.Waiting) {
+						if (mcs.getStatus() == MinecraftServerStatus.Online) {
 							MinecraftServerManager.sendToServer(p, mcs.getBungeeCordServername());
 						} else if (mcs.getStatus() == MinecraftServerStatus.Offline) {
 							p.closeInventory();

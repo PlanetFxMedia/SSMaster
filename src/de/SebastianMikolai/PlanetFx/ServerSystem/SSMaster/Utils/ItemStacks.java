@@ -13,7 +13,7 @@ import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.Minecr
 public class ItemStacks {
 	
 	public static ItemStack getMinecraftServer(MinecraftServer mcs) {
-		if (mcs.getStatus() == MinecraftServerStatus.Online || mcs.getStatus() == MinecraftServerStatus.Waiting) {
+		if (mcs.getStatus() == MinecraftServerStatus.Online) {
 			if (mcs.getOnlinePlayer() == 0) {
 				ItemStack item = new ItemStack(Material.IRON_BLOCK);
 				ItemMeta itemmeta = item.getItemMeta();
