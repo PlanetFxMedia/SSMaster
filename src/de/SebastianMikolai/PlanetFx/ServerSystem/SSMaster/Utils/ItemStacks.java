@@ -82,4 +82,45 @@ public class ItemStacks {
 		item.setItemMeta(itemmeta);
 		return item;
 	}
+	
+	public static ItemStack getServerVerwalten() {
+		ItemStack item = new ItemStack(Material.GOLD_AXE);
+		ItemMeta itemmeta = item.getItemMeta();
+		itemmeta.setDisplayName(ChatColor.GOLD + "Server Verwalten");
+		String[] lores = (ChatColor.LIGHT_PURPLE + "Starte und Stoppe Server").split(":");
+		ArrayList<String> lore = new ArrayList<String>();
+		for (int i = 0; i < lores.length; i++) {
+			lore.add(lores[i]);
+		}
+		itemmeta.setLore(lore);
+		item.setItemMeta(itemmeta);
+		return item;
+	}
+
+	public static ItemStack getServerStart() {
+		ItemStack item = new ItemStack(Material.WOOL);
+		item.setDurability((short)5);
+		ItemMeta itemmeta = item.getItemMeta();
+		itemmeta.setDisplayName(ChatColor.YELLOW + "Starten");
+		item.setItemMeta(itemmeta);
+		return item;
+	}
+	
+	public static ItemStack getServerStop() {
+		ItemStack item = new ItemStack(Material.WOOL);
+		item.setDurability((short)14);
+		ItemMeta itemmeta = item.getItemMeta();
+		itemmeta.setDisplayName(ChatColor.YELLOW + "Stoppen");
+		item.setItemMeta(itemmeta);
+		return item;
+	}
+	
+	public static ItemStack getServerBetreten() {
+		ItemStack item = new ItemStack(Material.WOOL);
+		item.setDurability((short)4);
+		ItemMeta itemmeta = item.getItemMeta();
+		itemmeta.setDisplayName(ChatColor.YELLOW + "Betreten");
+		item.setItemMeta(itemmeta);
+		return item;
+	}
 }

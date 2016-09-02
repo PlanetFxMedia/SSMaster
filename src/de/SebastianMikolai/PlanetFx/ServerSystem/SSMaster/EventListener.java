@@ -23,11 +23,13 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.BarAPI.BarAPI;
+import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.GUI.GUI;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServer;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServerManager;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServerStatus;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.NPC.NPCInventory;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Utils.ChatUtils;
+import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Utils.ItemStacks;
 import net.citizensnpcs.npc.entity.EntityHumanNPC.PlayerNPC;
 
 public class EventListener implements Listener {
@@ -80,6 +82,40 @@ public class EventListener implements Listener {
 						} else if (mcs.getStatus() == MinecraftServerStatus.Offline) {
 							p.closeInventory();
 							ChatUtils.sendMessage(p, "Dieser Server ist im Offline Modus");
+						}
+					}
+				} else if (ChatColor.stripColor(e.getClickedInventory().getTitle()).contains("CloudSystem")) {
+					e.setCancelled(true);
+					if (e.getCurrentItem().isSimilar(ItemStacks.getServerVerwalten())) {
+						GUI.openServerVerwalten(p);
+					}
+				} else if (ChatColor.stripColor(e.getClickedInventory().getName()).contains("Server Verwalten")) {
+					e.setCancelled(true);
+					MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
+					if (mcs != null) {
+						GUI.openServerVerwaltenServer(p, mcs);
+					}
+				} else if (ChatColor.stripColor(e.getClickedInventory().getName()).contains("Server: ")) {
+					e.setCancelled(true);
+					MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(ChatColor.stripColor(e.getClickedInventory().getName().split(" ")[1]));
+					if (mcs != null) {
+						if (e.getCurrentItem().isSimilar(ItemStacks.getServerStart())) {
+							p.closeInventory();
+							if (mcs.getStatus() == MinecraftServerStatus.Offline) {
+								MinecraftServerManager.getInstance().startMinecraftServer(mcs.getBungeeCordServername());
+							} else {
+								ChatUtils.sendMessage(p, "Server konnte nicht gestartet werden - Status: " + mcs.getStatus());
+							}
+						} else if (e.getCurrentItem().isSimilar(ItemStacks.getServerStop())) {
+							p.closeInventory();
+							if (mcs.getStatus() != MinecraftServerStatus.Offline) {
+								MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
+							} else {
+								ChatUtils.sendMessage(p, "Server konnte nicht gestoppt werden - Status: " + mcs.getStatus());
+							}
+						} else if (e.getCurrentItem().isSimilar(ItemStacks.getServerBetreten())) {
+							p.closeInventory();
+							MinecraftServerManager.sendToServer(p, mcs.getBungeeCordServername());
 						}
 					}
 				}

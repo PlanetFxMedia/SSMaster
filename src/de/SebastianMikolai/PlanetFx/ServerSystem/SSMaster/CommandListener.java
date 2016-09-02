@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.BarAPI.BarAPI;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Datenbank.MySQL;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Datenbank.TCPClient;
+import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.GUI.GUI;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServer;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServerManager;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Utils.ChatUtils;
@@ -243,7 +244,12 @@ public class CommandListener implements CommandExecutor {
 					ChatUtils.sendMessage(cs, "Versuche: /cs help");
 				}
 			} else {
-				ChatUtils.sendMessage(cs, "Versuche: /cs help");
+				if (cs instanceof Player) {
+					Player p = (Player)cs;
+					GUI.openMainMenu(p);
+				} else {
+					ChatUtils.sendMessage(cs, "Versuche: /cs help");
+				}
 			}
 		} else {
 			ChatUtils.sendMessage(cs, "Dafür hast du keine Berechtigung!");
