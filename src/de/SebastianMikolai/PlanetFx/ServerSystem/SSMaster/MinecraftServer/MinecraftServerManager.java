@@ -79,53 +79,43 @@ public class MinecraftServerManager {
 		return null;
 	}
 	
-	public void stopMinecraftServer(String BungeeCordServername) {
-		if (MinecraftServers.containsKey(BungeeCordServername)) {
-			MinecraftServer mcs = getMinecraftServer(BungeeCordServername);
-			if (mcs != null) {		        
-				List<String> pid = new ArrayList<String>();
-		        try {
-					String[] cmdexec = {"/bin/sh", "-c", "ps -ef | grep " + mcs.getBungeeCordServername() + " | grep -v grep | awk '{print $2}'"};
-					Runtime rt = Runtime.getRuntime();
-					Process proc = rt.exec(cmdexec);
-			        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-			        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
-			        String s = null;
-			        while ((s = stdInput.readLine()) != null) {
-			        	pid.add(s);
-			        }
-			        while ((s = stdError.readLine()) != null) {
-			        	System.out.println(s);
-			        }
+	public void stopMinecraftServer(MinecraftServer mcs) {
+		List<String> pid = new ArrayList<String>();
+        try {
+			String[] cmdexec = {"/bin/sh", "-c", "ps -ef | grep " + mcs.getBungeeCordServername() + " | grep -v grep | awk '{print $2}'"};
+			Runtime rt = Runtime.getRuntime();
+			Process proc = rt.exec(cmdexec);
+	        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+	        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+	        String s = null;
+	        while ((s = stdInput.readLine()) != null) {
+	        	pid.add(s);
+	        }
+	        while ((s = stdError.readLine()) != null) {
+	        	System.out.println(s);
+	        }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        if (!pid.isEmpty()) {
+        	for (String processID : pid) {
+        		try {
+					String[] cmdexec = {"/bin/sh", "-c", "kill " + processID};
+					Runtime.getRuntime().exec(cmdexec);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-		        if (!pid.isEmpty()) {
-		        	for (String processID : pid) {
-		        		try {
-							String[] cmdexec = {"/bin/sh", "-c", "kill " + processID};
-							Runtime.getRuntime().exec(cmdexec);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-		        	}
-		        }
-			}
-		}
+        	}
+        }
 	}
 	
-	public void startMinecraftServer(String BungeeCordServername) {
-		if (MinecraftServers.containsKey(BungeeCordServername)) {
-			MinecraftServer mcs = getMinecraftServer(BungeeCordServername);
-			if (mcs != null) {
-				String cmdexec = "screen -d -m -S " + mcs.getBungeeCordServername() + " taskset -c 1-8 " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/./start.sh";
-		        try {
-		        	File dir = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
-		        	Runtime.getRuntime().exec(cmdexec, null, dir);
-		        } catch (IOException ioe) {
-		        	ioe.printStackTrace();
-		       	}
-			}
+	public void startMinecraftServer(MinecraftServer mcs) {
+		String cmdexec = "screen -d -m -S " + mcs.getBungeeCordServername() + " taskset -c 1-8 " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/./start.sh";
+		try {
+			File dir = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
+		   	Runtime.getRuntime().exec(cmdexec, null, dir);
+		} catch (IOException ioe) {
+		   	ioe.printStackTrace();
 		}
 	}
 	
@@ -416,7 +406,7 @@ public class MinecraftServerManager {
 					if (p != null) {
 						ChatUtils.sendMessage(p, "Server " + mcs.getBungeeCordServername() + " erstellt!");
 					}
-					MinecraftServerManager.getInstance().startMinecraftServer(mcs.getBungeeCordServername());
+					MinecraftServerManager.getInstance().startMinecraftServer(mcs);
 				}
 				
 			}, 5*20L);

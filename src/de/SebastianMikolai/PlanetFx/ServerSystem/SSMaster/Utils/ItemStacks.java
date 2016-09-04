@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -84,7 +85,7 @@ public class ItemStacks {
 	}
 	
 	public static ItemStack getServerVerwalten() {
-		ItemStack item = new ItemStack(Material.GOLD_AXE);
+		ItemStack item = new ItemStack(Material.WORKBENCH);
 		ItemMeta itemmeta = item.getItemMeta();
 		itemmeta.setDisplayName(ChatColor.GOLD + "Server Verwalten");
 		String[] lores = (ChatColor.LIGHT_PURPLE + "Starte und Stoppe Server").split(":");
@@ -93,10 +94,19 @@ public class ItemStacks {
 			lore.add(lores[i]);
 		}
 		itemmeta.setLore(lore);
+		itemmeta.addEnchant(Enchantment.KNOCKBACK, 10, false);
 		item.setItemMeta(itemmeta);
 		return item;
 	}
 
+	public static ItemStack getBack() {
+		ItemStack item = new ItemStack(Material.ARROW);
+		ItemMeta itemmeta = item.getItemMeta();
+		itemmeta.setDisplayName(ChatColor.YELLOW + "Zurück");
+		item.setItemMeta(itemmeta);
+		return item;
+	}
+	
 	public static ItemStack getServerStart() {
 		ItemStack item = new ItemStack(Material.WOOL);
 		item.setDurability((short)5);

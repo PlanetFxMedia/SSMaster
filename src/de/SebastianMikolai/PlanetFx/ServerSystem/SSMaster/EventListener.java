@@ -1,5 +1,9 @@
 package de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -30,6 +34,7 @@ import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.Minecr
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.NPC.NPCInventory;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Utils.ChatUtils;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Utils.ItemStacks;
+
 import net.citizensnpcs.npc.entity.EntityHumanNPC.PlayerNPC;
 
 public class EventListener implements Listener {
@@ -94,6 +99,8 @@ public class EventListener implements Listener {
 					MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(ChatColor.stripColor(e.getCurrentItem().getItemMeta().getDisplayName()));
 					if (mcs != null) {
 						GUI.openServerVerwaltenServer(p, mcs);
+					} else if (e.getCurrentItem().isSimilar(ItemStacks.getBack())) {
+						GUI.openMainMenu(p);
 					}
 				} else if (ChatColor.stripColor(e.getClickedInventory().getName()).contains("Server: ")) {
 					e.setCancelled(true);
@@ -101,21 +108,29 @@ public class EventListener implements Listener {
 					if (mcs != null) {
 						if (e.getCurrentItem().isSimilar(ItemStacks.getServerStart())) {
 							p.closeInventory();
-							if (mcs.getStatus() == MinecraftServerStatus.Offline) {
-								MinecraftServerManager.getInstance().startMinecraftServer(mcs.getBungeeCordServername());
-							} else {
-								ChatUtils.sendMessage(p, "Server konnte nicht gestartet werden - Status: " + mcs.getStatus());
+							try {
+								Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
+								socket.close();
+								ChatUtils.sendMessage(p, "Der Server ist bereits Online!");
+							} catch (IOException ex) {
+								MinecraftServerManager.getInstance().startMinecraftServer(mcs);
+					          	ChatUtils.sendMessage(p, "Server " + mcs.getBungeeCordServername() + " startet!");
 							}
 						} else if (e.getCurrentItem().isSimilar(ItemStacks.getServerStop())) {
 							p.closeInventory();
-							if (mcs.getStatus() != MinecraftServerStatus.Offline) {
-								MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
-							} else {
-								ChatUtils.sendMessage(p, "Server konnte nicht gestoppt werden - Status: " + mcs.getStatus());
+							try {
+								Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
+								socket.close();
+								MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
+					          	ChatUtils.sendMessage(p, "Server " + mcs.getBungeeCordServername() + " stoppt!");
+							} catch (IOException ex) {
+								ChatUtils.sendMessage(p, "Der Server ist bereits Offline!");
 							}
 						} else if (e.getCurrentItem().isSimilar(ItemStacks.getServerBetreten())) {
 							p.closeInventory();
 							MinecraftServerManager.sendToServer(p, mcs.getBungeeCordServername());
+						} else if (e.getCurrentItem().isSimilar(ItemStacks.getBack())) {
+							GUI.openServerVerwalten(p);
 						}
 					}
 				}

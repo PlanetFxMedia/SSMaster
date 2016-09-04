@@ -1,6 +1,9 @@
 package de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +14,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.google.gson.JsonObject;
-
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.BarAPI.BarAPI;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Datenbank.MySQL;
-import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.Datenbank.TCPClient;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.GUI.GUI;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServer;
 import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.MinecraftServerManager;
@@ -113,11 +113,6 @@ public class CommandListener implements CommandExecutor {
 								ChatUtils.sendMessage(cs, "Dies dauert kurz!");
 								MinecraftServerManager.getInstance().addMinecraftServer(mcs);
 								MinecraftServerManager.getInstance().copyTemplateToServer(cs, mcs);
-								JsonObject jsonObject = new JsonObject();
-								jsonObject.addProperty("option", "add");
-								jsonObject.addProperty("servername", mcs.getBungeeCordServername());
-								jsonObject.addProperty("port", mcs.getPort());
-								TCPClient.send(jsonObject, SSMaster.getInstance().tcp_port_bungee);
 								MySQL.addMinecraftServerStatus(mcs);
 							} else {
 								ChatUtils.sendMessage(cs, "Server existiert bereits!");
@@ -134,18 +129,13 @@ public class CommandListener implements CommandExecutor {
 						if (serverpath.exists()) {
 							ChatUtils.sendMessage(cs, "Dies dauert kurz!");
 							MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(args[1]);
-							MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
+							MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
 							Bukkit.getScheduler().scheduleSyncDelayedTask(SSMaster.getInstance(), new Runnable() {
 								@Override
 								public void run() {
-									MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
+									MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
 									MinecraftServerManager.getInstance().removeMinecraftServer(mcs.getBungeeCordServername());
 									MinecraftServerManager.getInstance().deleteServerPath(cs, mcs.getBungeeCordServername());
-									JsonObject jsonObject = new JsonObject();
-									jsonObject.addProperty("option", "remove");
-									jsonObject.addProperty("servername", mcs.getBungeeCordServername());
-									jsonObject.addProperty("port", mcs.getPort());
-									TCPClient.send(jsonObject, SSMaster.getInstance().tcp_port_bungee);
 									MySQL.deleteMinecraftServerStatus(mcs.getBungeeCordServername());
 								}	
 							}, 3*20L);
@@ -160,18 +150,13 @@ public class CommandListener implements CommandExecutor {
 						File serverpath = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
 						if (serverpath.exists()) {
 							ChatUtils.sendMessage(cs, "Dies dauert kurz!");
-							MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
+							MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
 							Bukkit.getScheduler().scheduleSyncDelayedTask(SSMaster.getInstance(), new Runnable() {
 								@Override
 								public void run() {
-									MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
+									MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
 									MinecraftServerManager.getInstance().removeMinecraftServer(mcs.getBungeeCordServername());
 									MinecraftServerManager.getInstance().deleteServerPath(cs, mcs.getBungeeCordServername());
-									JsonObject jsonObject = new JsonObject();
-									jsonObject.addProperty("option", "remove");
-									jsonObject.addProperty("servername", mcs.getBungeeCordServername());
-									jsonObject.addProperty("port", mcs.getPort());
-									TCPClient.send(jsonObject, SSMaster.getInstance().tcp_port_bungee);
 									MySQL.deleteMinecraftServerStatus(mcs.getBungeeCordServername());
 								}	
 							}, 3*20L);
@@ -183,8 +168,17 @@ public class CommandListener implements CommandExecutor {
 					if (args.length == 2) {
 						File serverpath = new File(SSMaster.getInstance().cspath + "server/" + args[1] + "/");
 						if (serverpath.exists()) {
-							MinecraftServerManager.getInstance().startMinecraftServer(args[1]);
-							ChatUtils.sendMessage(cs, "Server " + args[1] + " startet!");
+							MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(args[1]);
+							if (mcs != null) {
+								try {
+									Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
+									socket.close();
+									ChatUtils.sendMessage(cs, "Der Server ist bereits Online!");
+								} catch (IOException ex) {
+									MinecraftServerManager.getInstance().startMinecraftServer(mcs);
+									ChatUtils.sendMessage(cs, "Server " + args[1] + " startet!");
+								}
+							}
 						} else {
 							ChatUtils.sendMessage(cs, "Server existiert nicht!");
 						}
@@ -195,8 +189,16 @@ public class CommandListener implements CommandExecutor {
 					for (MinecraftServer mcs : MinecraftServerManager.getInstance().getMinecraftServers().values()) {
 						File serverpath = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
 						if (serverpath.exists()) {
-							MinecraftServerManager.getInstance().startMinecraftServer(mcs.getBungeeCordServername());
-							ChatUtils.sendMessage(cs, "Server " + mcs.getBungeeCordServername() + " startet!");
+							if (mcs != null) {
+								try {
+									Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
+									socket.close();
+									ChatUtils.sendMessage(cs, "Der Server ist bereits Online!");
+								} catch (IOException ex) {
+									MinecraftServerManager.getInstance().startMinecraftServer(mcs);
+									ChatUtils.sendMessage(cs, "Server " + args[1] + " startet!");
+								}
+							}
 						} else {
 							ChatUtils.sendMessage(cs, "Server existiert nicht!");
 						}
@@ -205,8 +207,17 @@ public class CommandListener implements CommandExecutor {
 					if (args.length == 2) {
 						File serverpath = new File(SSMaster.getInstance().cspath + "server/" + args[1] + "/");
 						if (serverpath.exists()) {
-							MinecraftServerManager.getInstance().stopMinecraftServer(args[1]);
-				          	ChatUtils.sendMessage(cs, "Server " + args[1] + " stoppt!");
+							MinecraftServer mcs = MinecraftServerManager.getInstance().getMinecraftServer(args[1]);
+							if (mcs != null) {
+								try {
+									Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
+									socket.close();
+									MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
+						          	ChatUtils.sendMessage(cs, "Server " + args[1] + " stoppt!");
+								} catch (IOException ex) {
+									ChatUtils.sendMessage(cs, "Der Server ist bereits Offline!");
+								}
+							}
 						} else {
 							ChatUtils.sendMessage(cs, "Server existiert nicht!");
 						}
@@ -217,8 +228,16 @@ public class CommandListener implements CommandExecutor {
 					for (MinecraftServer mcs : MinecraftServerManager.getInstance().getMinecraftServers().values()) {
 						File serverpath = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/");
 						if (serverpath.exists()) {
-							MinecraftServerManager.getInstance().stopMinecraftServer(mcs.getBungeeCordServername());
-				          	ChatUtils.sendMessage(cs, "Server " + mcs.getBungeeCordServername() + " stoppt!");
+							if (mcs != null) {
+								try {
+									Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
+									socket.close();
+									MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
+						          	ChatUtils.sendMessage(cs, "Server " + args[1] + " stoppt!");
+								} catch (IOException ex) {
+									ChatUtils.sendMessage(cs, "Der Server ist bereits Offline!");
+								}
+							}
 						} else {
 							ChatUtils.sendMessage(cs, "Server existiert nicht!");
 						}
