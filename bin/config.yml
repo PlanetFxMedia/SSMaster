@@ -4,7 +4,6 @@ database:
   db: akonia_serversystem
   user: root
   password: U2ViYXN0aWFuMTIy
-tcpport: 25615
 cspath: /home/sQ12461/gameserver/ServerSystem/ServerSystem/
 teleport: 40
 BossBarMessages:

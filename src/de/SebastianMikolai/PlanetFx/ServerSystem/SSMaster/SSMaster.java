@@ -21,8 +21,6 @@ import de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster.MinecraftServer.Minecr
 public class SSMaster extends JavaPlugin {
 	
 	private static SSMaster instance;
-	public int tcp_port;
-	public int tcp_port_bungee;
 	public String cspath;
 	public static int teleport;
 	public List<String> BossBarMessages;
@@ -37,7 +35,6 @@ public class SSMaster extends JavaPlugin {
 		instance = this;
 		saveDefaultConfig();
 		teleport = getConfig().getInt("teleport");
-		tcp_port = getConfig().getInt("tcpport");
 		cspath = getConfig().getString("cspath");
 		BossBarMessages = getConfig().getStringList("BossBarMessages");
 		File cs = new File(cspath);
@@ -62,9 +59,6 @@ public class SSMaster extends JavaPlugin {
 	public void onEnable() {
 		MySQL.LadeTabellen();
 		MinecraftServerManager.getInstance().load();
-		MinecraftServerManager.getInstance().removeMinecraftServer("master");
-		MinecraftServerManager.getInstance().addMinecraftServer(new MinecraftServer("master", tcp_port, "", Bukkit.getMaxPlayers() + "x1"));
-		tcp_port_bungee = MinecraftServerManager.getInstance().getMinecraftServer("bungee").getPort();
 		getServer().getMessenger().registerOutgoingPluginChannel(instance, "BungeeCord");
 		getCommand("cs").setExecutor(new CommandListener());
 		PluginManager pm = getServer().getPluginManager();
