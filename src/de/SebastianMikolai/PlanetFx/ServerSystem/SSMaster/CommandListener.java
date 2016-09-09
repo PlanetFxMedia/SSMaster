@@ -69,9 +69,7 @@ public class CommandListener implements CommandExecutor {
 					}
 				} else if (args[0].equalsIgnoreCase("updateall")) {
 					for (MinecraftServer mcs : MinecraftServerManager.getInstance().getMinecraftServers().values())	{	
-						if (!mcs.getBungeeCordServername().equalsIgnoreCase("master") && !mcs.getBungeeCordServername().equalsIgnoreCase("bungee")) {
-							MinecraftServerManager.getInstance().updateTemplateServer(cs, mcs);
-						}
+						MinecraftServerManager.getInstance().updateTemplateServer(cs, mcs);
 					}
 				} else if (args[0].equalsIgnoreCase("bb")) {
 					if (args.length >= 2) {
@@ -196,7 +194,7 @@ public class CommandListener implements CommandExecutor {
 									ChatUtils.sendMessage(cs, "Der Server ist bereits Online!");
 								} catch (IOException ex) {
 									MinecraftServerManager.getInstance().startMinecraftServer(mcs);
-									ChatUtils.sendMessage(cs, "Server " + args[1] + " startet!");
+									ChatUtils.sendMessage(cs, "Server " + mcs.getBungeeCordServername() + " startet!");
 								}
 							}
 						} else {
@@ -233,7 +231,7 @@ public class CommandListener implements CommandExecutor {
 									Socket socket = new Socket(InetAddress.getLocalHost(), mcs.getPort());
 									socket.close();
 									MinecraftServerManager.getInstance().stopMinecraftServer(mcs);
-						          	ChatUtils.sendMessage(cs, "Server " + args[1] + " stoppt!");
+						          	ChatUtils.sendMessage(cs, "Server " + mcs.getBungeeCordServername() + " stoppt!");
 								} catch (IOException ex) {
 									ChatUtils.sendMessage(cs, "Der Server ist bereits Offline!");
 								}

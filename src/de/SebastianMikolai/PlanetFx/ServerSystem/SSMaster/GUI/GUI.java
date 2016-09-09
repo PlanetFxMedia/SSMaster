@@ -24,10 +24,8 @@ public class GUI {
 			int i = 0;
 			if (MinecraftServerManager.getInstance().getMinecraftServers().values().size() < (menu.getInventory().getSize() - 6)) {
 				for (MinecraftServer mcs : MinecraftServerManager.getInstance().getMinecraftServers().values()) {
-					if (!mcs.getBungeeCordServername().equalsIgnoreCase("master") && !mcs.getBungeeCordServername().equalsIgnoreCase("bungee")) {
-						menu.addItem(ItemStacks.getMinecraftServer(mcs), i);
-						i++;
-					}
+					menu.addItem(ItemStacks.getMinecraftServer(mcs), i);
+					i++;
 				}
 				menu.addItem(ItemStacks.getBack(), 40);
 			} else {

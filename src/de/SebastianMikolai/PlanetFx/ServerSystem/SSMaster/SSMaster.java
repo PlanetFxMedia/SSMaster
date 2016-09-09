@@ -76,12 +76,10 @@ public class SSMaster extends JavaPlugin {
 			@Override
 			public void run() {
 				for (MinecraftServer mcs : MinecraftServerManager.getInstance().getMinecraftServers().values()) {
-					if (!mcs.getBungeeCordServername().equalsIgnoreCase("master") && !mcs.getBungeeCordServername().equalsIgnoreCase("bungee")) {
-						JsonObject jsonObject = MySQL.getMinecraftServerStatus(mcs.getBungeeCordServername());
-						if (jsonObject.get("servername").getAsString().equalsIgnoreCase(mcs.getBungeeCordServername())) {
-							mcs.setOnlinePlayer(jsonObject.get("online").getAsInt());
-							mcs.setStatus(MinecraftServerStatus.valueOf(jsonObject.get("status").getAsString()));
-						}
+					JsonObject jsonObject = MySQL.getMinecraftServerStatus(mcs.getBungeeCordServername());
+					if (jsonObject.get("servername").getAsString().equalsIgnoreCase(mcs.getBungeeCordServername())) {
+						mcs.setOnlinePlayer(jsonObject.get("online").getAsInt());
+						mcs.setStatus(MinecraftServerStatus.valueOf(jsonObject.get("status").getAsString()));
 					}
 				}
 			}

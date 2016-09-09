@@ -398,6 +398,65 @@ public class MinecraftServerManager {
 				writer.write("java -server -Xmx500M -jar " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/spigot.jar nogui");
 				writer.flush();
 				writer.close();
+			} else if (mcs.getBungeeCordServername().toLowerCase().contains("tntrun")) {
+				quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/FastAsyncWorldEdit.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/FastAsyncWorldEdit.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/TNTRun.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/TNTRun.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+				cd.copyFile(quelle, ziel);
+				quelle = new File(SSMaster.getInstance().cspath + "files/WorldEdit.jar");
+				ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldEdit.jar");
+				cd.copyFile(quelle, ziel);
+				FileWriter writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/server.properties") ,true);
+				writer.write("level-name=world");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("level-type=FLAT");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-protection=0");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("force-gamemode=true");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("allow-nether=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("gamemode=0");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("difficulty=0");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-monsters=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-animals=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("spawn-npcs=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("pvp=true");
+				writer.write(System.getProperty("line.separator"));
+				int maxplayer = mcs.getMaxPlayer();
+				maxplayer++;
+				writer.write("max-players=" + maxplayer);
+				writer.write(System.getProperty("line.separator"));
+				writer.write("server-port=" + mcs.getPort());
+				writer.write(System.getProperty("line.separator"));
+				writer.write("online-mode=false");
+				writer.write(System.getProperty("line.separator"));
+				writer.write("motd=" + mcs.getBungeeCordServername());
+				writer.write(System.getProperty("line.separator"));
+				writer.write("server-name=" + mcs.getBungeeCordServername());
+				writer.flush();
+				writer.close();
+				writer = new FileWriter(new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/start.sh") ,true);
+				writer.write("java -server -Xmx500M -jar " + SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/spigot.jar nogui");
+				writer.flush();
+				writer.close();
 			}
 			Bukkit.getScheduler().scheduleSyncDelayedTask(SSMaster.getInstance(), new Runnable() {
 				@Override
@@ -498,6 +557,25 @@ public class MinecraftServerManager {
 			quelle = new File(SSMaster.getInstance().cspath + "files/WorldGuard.jar");
 			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldGuard.jar");
 			cd.copyFile(quelle, ziel);
+		} else if (mcs.getBungeeCordServername().toLowerCase().contains("tntrun")) {
+			quelle = new File(SSMaster.getInstance().cspath + "files/Multiverse-Core.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/Multiverse-Core.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/FastAsyncWorldEdit.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/FastAsyncWorldEdit.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/TNTRun.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/TNTRun.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/AAC.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/AAC.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/ProtocolLib.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/ProtocolLib.jar");
+			cd.copyFile(quelle, ziel);
+			quelle = new File(SSMaster.getInstance().cspath + "files/WorldEdit.jar");
+			ziel = new File(SSMaster.getInstance().cspath + "server/" + mcs.getBungeeCordServername() + "/plugins/WorldEdit.jar");
+			cd.copyFile(quelle, ziel);
 		}
 		if (p != null) {
 			ChatUtils.sendMessage(p, "Server " + mcs.getBungeeCordServername() + " geupdatet!");
@@ -512,6 +590,9 @@ public class MinecraftServerManager {
 			} else {
 				ports = ports + ":" + String.valueOf(mcs.getPort());
 			}
+		}
+		if (ports == null) {
+			ports = String.valueOf(Bukkit.getPort());
 		}
 		String[] numberStrs = ports.split(":");
 		int[] zahlen = new int[numberStrs.length];
