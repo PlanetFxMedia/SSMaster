@@ -1,12 +1,16 @@
 package de.SebastianMikolai.PlanetFx.ServerSystem.SSMaster;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -57,6 +61,7 @@ public class SSMaster extends JavaPlugin {
 		
 	@Override
 	public void onEnable() {
+		loadConfig();
 		MySQL.LadeTabellen();
 		MinecraftServerManager.getInstance().load();
 		getServer().getMessenger().registerOutgoingPluginChannel(instance, "BungeeCord");
@@ -104,5 +109,21 @@ public class SSMaster extends JavaPlugin {
 	public void onDisable() {
 		BarAPI.disable();
 		Bukkit.getScheduler().cancelTasks(getInstance());
+	}
+	
+	public void loadConfig() {
+		SSMaster.getInstance().reloadConfig();
+		ConfigurationSection cs = getConfig().getConfigurationSection("Minigames");
+		List<String> Minigames = new ArrayList<String>();
+		Map<String, String> Spielmodis = new HashMap<String, String>();
+		Map<String, String> Maps = new HashMap<String, String>();
+		for (String gamename : cs.getKeys(false)) {
+			Minigames.add(gamename);
+			Spielmodis.put(gamename, cs.getString(gamename + ".Spielmodis"));
+			Maps.put(gamename, cs.getString(gamename + ".Maps"));
+		}
+		MinecraftServerManager.getInstance().Minigames = Minigames;
+		MinecraftServerManager.getInstance().Spielmodis = Spielmodis;
+		MinecraftServerManager.getInstance().Maps = Maps;
 	}
 }

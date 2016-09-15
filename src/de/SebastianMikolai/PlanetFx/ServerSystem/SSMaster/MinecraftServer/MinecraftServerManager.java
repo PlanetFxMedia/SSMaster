@@ -25,6 +25,9 @@ public class MinecraftServerManager {
 
 	private static MinecraftServerManager instance;
 	private Map<String, MinecraftServer> MinecraftServers;
+	public List<String> Minigames;
+	public Map<String, String> Spielmodis;
+	public Map<String, String> Maps;
 	
 	public static MinecraftServerManager getInstance() {
 		if (instance == null) {

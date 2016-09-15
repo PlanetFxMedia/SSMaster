@@ -8,5 +8,21 @@ cspath: /home/sQ12461/gameserver/ServerSystem/ServerSystem/
 teleport: 40
 BossBarMessages:
 - '&b&lAkonia Netzwerk: &a&lMinigames'
-- '&d[1.10 - 1.10.2] &cClient Support'
-- '&6HungerGames&2 - &6Bedwars&2 - &6Spleef&2 - &6TurfWars'
+- '&4&lNEU: &6&lIceHockey!'
+- '&2&lAugust Map Update auf &6&lTurfWars&2&l!'
+Minigames:
+  HungerGames:
+    Spielmodis: '5x1:8x1:12x1'
+    Maps: 'BG'
+  Bedwars:
+    Spielmodis: '4x1:4x2:4x4'
+    Maps: 'Eiskugel:Island:Nintendo:Villager'
+  IceHockey:
+    Spielmodis: '2x6'
+    Maps: 'Stadion'
+  TurfWars:
+    Spielmodis: '2x4'
+    Maps: 'Burg:Kolosseum:Schiffkampf:StationBrawl'
+  TNTRun:
+    Spielmodis: '2x1:4x1:8x1'
+    Maps: 'Test'
